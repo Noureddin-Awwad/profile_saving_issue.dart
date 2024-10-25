@@ -147,11 +147,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _currentUser !.tiktok = _tiktokUrlController.text;
       _currentUser !.dateOfBirthInMillis = _dateOfBirth?.millisecondsSinceEpoch;
 
-      // Save user data using the UsernamePage's saveUser Data method
-      UsernamePage.of(context)?.saveUserData(_currentUser !);
+
 
       // Update the Hive box with the current user
-      await _userBox.put('currentUser', _currentUser!.toMap() as User);
+      await _userBox.put('currentUser', _currentUser!);
       Navigator.pop(context, _currentUser);
     } else {
       // Handle case where _currentUser  is null (e.g., show an error message)
@@ -1570,5 +1569,8 @@ class _MyCombinedHeaderDelegate extends SliverPersistentHeaderDelegate {
         oldDelegate.imagePath != imagePath;
   }
 }
+
+
+
 
 
