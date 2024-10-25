@@ -18,9 +18,6 @@ class UsernamePage extends StatefulWidget {
   @override
   State<UsernamePage> createState() => _UsernamePageState();
 
-  static _UsernamePageState? of(BuildContext context) {
-    return context.findAncestorStateOfType<_UsernamePageState>();
-  }
 }
 
 class _UsernamePageState extends State<UsernamePage> with WidgetsBindingObserver {
@@ -41,7 +38,14 @@ class _UsernamePageState extends State<UsernamePage> with WidgetsBindingObserver
     _openHiveBox().then((_) {
       _fetchUserData(); // Call _fetchUserData after _openHiveBox completes
     });
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final updatedUser = ModalRoute.of(context)?.settings.arguments as User?;
+      if (updatedUser != null) {
+        setState(() {
+          _currentUser = updatedUser;
+        });
+      }
+    });
   }
   @override
   void didChangeDependencies() {
